@@ -13,19 +13,34 @@
 
 ### Structure de données pour représenter une neurone 
 
-Type : Neurone </br>
-    Poid : Entier </br>
-    Biais : Entier </br>
-    Entrées : Liste Entiers </br>
+````
+Type : Neurone 
+    Poid : Entier 
+    Biais : Entier 
+    Entrées : Liste Entiers
 Fin Type
+````
+
+### InitNeur
+
+<span style="background-color: lightgreen;">**Lexique** </br></span>
+l : Liste &lt;Entiers&gt;</br> 
+b : Biais &lt;Entier&gt;
+
+**Algorithmique** </br>
+*Données :* </br>
+l : Liste &lt;Entiers&gt;</br>
+b : Biais &lt;Entier&gt;
+
+*Résultat :* </br>
+n : Neurone<Neurone>
+
+````
+Fonction InitNeur
 
 
-Lexique 
 
-Algorithmique
-Données 
-
-
+````
 
 ## Partie 2 : Couche de Neurones
 
