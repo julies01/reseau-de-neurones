@@ -35,9 +35,18 @@ int ask_nb_entries(){
     return nb_entries;
 }
 
+int *create_weigth_list(int nb_entries, int value){
+    int *weight_list = (int *)malloc(nb_entries*sizeof(int));
+    for (int i = 0; i < nb_entries; i++){
+        weight_list[i] = value;
+    }
+    return weight_list;
+}
+
 void and_n_n(){
     int nb_entries = ask_nb_entries();
-    Neuron neuron1 = InitNeur(NULL, nb_entries, nb_entries);
+    int *weight_list = create_weigth_list(nb_entries, 1);
+    Neuron neuron1 = InitNeur(weight_list, nb_entries, nb_entries);
     SeeNeur(neuron1);
 }
 
@@ -51,6 +60,13 @@ void not_n_n(){
 
 void multiple_layers_n_n(){
 
+}
+
+void create_n_n(){
+    int nb_entries = ask_nb_entries();
+    int *weight_list = create_weigth_list(nb_entries, 0);
+    Neuron neuron1 = InitNeur(weight_list, nb_entries, nb_entries);
+    SeeNeur(neuron1);
 }
 
 

@@ -30,7 +30,7 @@ typedef struct Layer *Neural_Network;
  * @param nb_entries 
  * @return Neuron 
  */
-Neuron InitNeur(Chained_List weight_list,int bias, int nb_entries);
+Neuron InitNeur(int* weight_list,int bias, int nb_entries);
 
 /**
  * @brief A procedure allowing to see the content of a neuron

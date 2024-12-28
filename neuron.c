@@ -10,12 +10,32 @@
  * @param nb_entries 
  * @return Neuron 
  */
-Neuron InitNeur(Chained_List weight_list,int bias, int nb_entries){
+Neuron InitNeur(int *weight_list,int bias, int nb_entries){
     Neuron neuron;
-    neuron.weight_list = (Chained_List)malloc(sizeof(Chained_List));
-    neuron.weight_list = weight_list;
+    neuron.weight_list = (Chained_List)malloc(nb_entries*sizeof(Chained_Elem));
+    for (int i = 0; i < nb_entries; i++){
+        neuron.weight_list = AddElemTail(neuron.weight_list, weight_list[i]);
+    }
     neuron.bias = bias;
     return neuron;
+}
+
+Chained_List AddElemTail(Chained_List list, int value){
+    Chained_List new_elem = (Chained_List)malloc(sizeof(Chained_Elem));
+    new_elem->value = value;
+    new_elem->next = NULL;
+
+    if (list == NULL){
+        return new_elem;
+    }
+    else {
+        Chained_List temp = list;
+        while (temp->next != NULL){
+            temp = temp->next;
+        }
+        temp->next = new_elem;
+        return list;
+    }
 }
 
 /**
@@ -58,5 +78,5 @@ Chained_List OutCouche(Layer layer, int *ei){
 }
 
 Neural_Network CreerResNeur(){
-    
+
 }
