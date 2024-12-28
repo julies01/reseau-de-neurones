@@ -15,8 +15,30 @@ int input_control(int input,int valid_input_list[],int size){
         return -1;
 }
 
-void and_n_n(){
+/**
+ * @brief A function to ask the user the number of entries that the neuron or neurons will receive
+ * 
+ * @return int 
+ */
+int ask_nb_entries(){
+    int nb_entries;
+    printf("Please choose \e[1mthe number of entries\e[0m that your neuron or neurons will receive :");
+    char input[10];
+    scanf("%9s", input);
 
+    //check if the input is a number superior to 0
+    while (strlen(input) != 1 || !isdigit(input[0] || input[0]-'0' > 0)) {
+        printf("Please enter \e[31ma valid number\e[0m for the number of entries : ");
+        scanf("%9s", input);
+    }
+    nb_entries = input[0] - '0';
+    return nb_entries;
+}
+
+void and_n_n(){
+    int nb_entries = ask_nb_entries();
+    Neuron neuron1 = InitNeur(NULL, nb_entries, nb_entries);
+    SeeNeur(neuron1);
 }
 
 void or_n_n(){
@@ -83,7 +105,8 @@ void menu(){
  }
 
 int main() {
-    printf("\n\n \e[1m Hello, and welcome to my neural network maker program ! \e[0m\n\n");
-    menu();
+    /*printf("\n\n \e[1m Hello, and welcome to my neural network maker program ! \e[0m\n\n");
+    menu();*/
+
     return 0;
 }
