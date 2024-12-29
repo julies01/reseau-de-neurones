@@ -2,15 +2,23 @@
 #define NEURON_H
 
 
-typedef struct Chained_Elem {
-    int value;
-    struct Chained_Elem *next;
-}  Chained_Elem ;
+typedef struct Linked_Elem {
+    void* value;
+    struct Linked_Elem *next;
+} Linked_Elem;
 
-typedef struct Chained_Elem *Chained_List;
+typedef struct Linked_Elem *Linked_List;
+
+typedef struct DLinked_Elem {
+    int value;
+    struct DLinked_Elem *next;
+    struct DLinked_Elem *prev;
+}  DLinked_Elem ;
+
+typedef struct DLinked_Elem *DLinked_List;
 
 typedef struct Neuron {
-   Chained_List weight_list;
+   Linked_List weight_list;
    int bias;
    struct Neuron *next;
 } Neuron;
@@ -20,25 +28,14 @@ typedef struct Layer {
     struct Layer *next;
 } Layer;
 
-typedef struct Layer *Neural_Network;
+typedef struct Neural_Network {
+    Layer *Input_layer;
+    Layer *Output_layer;
+} Neural_Network;
 
-/**
- * @brief A function allowing to create a neuron
- * 
- * @param weight_list 
- * @param bias 
- * @param nb_entries 
- * @return Neuron 
- */
-Neuron InitNeur(int* weight_list,int bias, int nb_entries);
-
-/**
- * @brief A procedure allowing to see the content of a neuron
- * 
- * @param neuron 
- */
-void SeeNeur(Neuron neuron);
-
-
+void See_Neur(Neuron neuron);
+Neuron Init_Neur(int *weight_list,int bias, int nb_entries);
+int Out_Neur(Neuron neuron, DLinked_List ei);
+Neural_Network CreerResNeur(int nb_layers, int *nb_neurons_list)
 
 #endif

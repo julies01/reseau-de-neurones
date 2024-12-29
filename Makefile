@@ -8,7 +8,7 @@ CFLAGS = -Wall -g
 TARGET = main
 
 # Source files
-SRCS = main.c 
+SRCS = main.c neuron.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)
@@ -24,7 +24,6 @@ $(TARGET): $(OBJS)
 # Compile source files into object files
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-
 
 # Clean up build files
 clean:
