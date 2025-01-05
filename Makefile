@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -g
+CFLAGS = -Wall -Wextra -Werror -g 
 
 # Target executable
 TARGET = main

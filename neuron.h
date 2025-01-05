@@ -2,40 +2,89 @@
 #define NEURON_H
 
 
-typedef struct Linked_Elem {
-    void* value;
-    struct Linked_Elem *next;
-} Linked_Elem;
+typedef struct Weight_Elem {
 
-typedef struct Linked_Elem *Linked_List;
-
-typedef struct DLinked_Elem {
     int value;
-    struct DLinked_Elem *next;
-    struct DLinked_Elem *prev;
-}  DLinked_Elem ;
+    struct Weight_Elem *next;
 
-typedef struct DLinked_Elem *DLinked_List;
+} Weight_Elem;
+
+typedef struct Weight_Elem * Weight_List;
+
+typedef struct Entry_Elem {
+
+    int value;
+    struct Entry_Elem *next;
+    struct Entry_Elem *prev;
+
+}  Entry_Elem ;
+
+typedef struct Entry_Elem * Entry_List;
 
 typedef struct Neuron {
-   Linked_List weight_list;
+
+   Weight_List weight_list;
    int bias;
    struct Neuron *next;
+
 } Neuron;
 
+typedef struct Neuron *Neuron_List;
+
 typedef struct Layer {
-    Neuron *neurons;
+
+    Neuron_List neurons;
     struct Layer *next;
+
 } Layer;
 
+typedef struct Layer *Layer_List;
+
 typedef struct Neural_Network {
+
     Layer *Input_layer;
     Layer *Output_layer;
+
 } Neural_Network;
 
-void See_Neur(Neuron neuron);
-Neuron Init_Neur(int *weight_list,int bias, int nb_entries);
-int Out_Neur(Neuron neuron, DLinked_List ei);
-Neural_Network CreerResNeur(int nb_layers, int *nb_neurons_list)
+
+
+/**
+ * @brief 
+ * 
+ * @param nb_layers 
+ * @param nb_neurons_list 
+ * @return Neural_Network 
+ */
+Neural_Network Creer_Res_Neur(int nb_layers, int *nb_neurons_list);
+
+
+/**
+ * @brief 
+ * 
+ * @param neural_network 
+ * @param ei 
+ * @return Linked_List 
+ */
+Entry_List Forward_Propagation(Neural_Network neural_network, Entry_List ei);
+
+/**
+ * @brief 
+ * 
+ * @param result_list 
+ * @return int 
+ */
+int Get_Final_Output(Entry_List result_list);
+
+/**
+ * @brief 
+ * 
+ * @param weight_list 
+ * @param bias 
+ * @param nb_entries 
+ * @return Neuron 
+ */
+Entry_List Create_Entries_List(int nb_entries);
+
 
 #endif

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "neuron.h"
+#include "debug.h"
 #include <ctype.h>
 
 //ajouter une option pour revenir au menu principal
@@ -15,89 +16,14 @@ int Input_Control(int input,int valid_input_list[],int size){
         return -1;
 }
 
-/**
- * @brief A function to ask the user the number of entries that the neuron or neurons will receive
- * 
- * @return int 
- */
-int Ask_Nb_Entries(){
-    int nb_entries;
-    printf("-> Please choose \e[1mthe number of entries\e[0m that your neuron or neurons will receive : ");
-    char input[10];
-    scanf("%9s", input);
-
-    //check if the input is a number superior to 0
-    while (strlen(input) != 1 || !isdigit(input[0]) || (input[0]-'0') <= 0) {
-        printf("-> Please enter \e[31ma valid number\e[0m for the number of entries : ");
-        scanf("%9s", input);
-    }
-    nb_entries = input[0] - '0';
-    return nb_entries;
+void And_N_N(){
+    int nb_layers = 1;
+    int nb_neurons_list[1] = {1};
+    Neural_Network and_n_n = Creer_Res_Neur(nb_layers, nb_neurons_list);
+    Entry_List result_list = Forward_Propagation(and_n_n, Create_Entries_List(2));
+    int final_result = Get_Final_Output(result_list);
+    printf("\n\nThe final result is : %d\n\n", final_result);
 }
-
-DLinked_List DL_Add_Elem_Tail(DLinked_List list, int value){
-    DLinked_List new_elem = (DLinked_List)malloc(sizeof(DLinked_Elem));
-    new_elem->value = value;
-    new_elem->next = NULL;
-
-    if (list == NULL){
-        new_elem->prev = NULL;
-        return new_elem;
-    }
-    else {
-        DLinked_List temp = list;
-        while (temp->next != NULL){
-            temp = temp->next;
-        }
-        temp->next = new_elem;
-        new_elem->prev = temp;
-        return list;
-    }
-}
-
-DLinked_List Create_Entries_List(int nb_entries){
-    DLinked_List entries_list = NULL;
-    for (int i = 0; i < nb_entries; i++){
-        int value;
-        printf("-> Please enter \e[1mthe value\e[0m of the entry number %d : ", i+1);
-        char input[10];
-        scanf("%9s", input);
-        while (strlen(input) != 1 || !isdigit(input[0])) {
-            printf("-> Please enter \e[31ma valid number\e[0m for the entry value : ");
-            scanf("%9s", input);
-        }
-        value = input[0] - '0';
-        entries_list = DL_Add_Elem_Tail(entries_list, value);
-    }
-    return entries_list;
-}
-
-
-int *Ask_Weight_List(int nb_entries){
-    int *weight_list = (int *)malloc(nb_entries*sizeof(int));
-    printf("\e[3mCreating the weight list ...\e[0m\n");
-    for (int i = 0; i < nb_entries; i++){
-        int value;
-        printf("-> Please enter \e[1mthe weight\e[0m of the entry number %d : ", i+1);
-        char input[10];
-        scanf("%9s", input);
-        while (strlen(input) != 1 || !isdigit(input[0])) {
-            printf("-> Please enter \e[31ma valid number\e[0m for the weight value : ");
-            scanf("%9s", input);
-        }
-        value = input[0] - '0';
-        weight_list[i] = value;
-    }
-    return weight_list;
-}
-int *Create_Weigth_List(int nb_entries, int value){
-    int *weight_list = (int *)malloc(nb_entries*sizeof(int));
-    for (int i = 0; i < nb_entries; i++){
-        weight_list[i] = value;
-    }
-    return weight_list;
-}
-
 
 void Or_N_N(){
     /*int nb_entries = Ask_Nb_Entries();
@@ -128,23 +54,21 @@ void Redirection(int input){
 
         case 2:
             printf("\nGreat, you chose to test the \e[1;48;2;118;201;214mAND\e[0m\e[1m neural network.\e[0m\n\n");
-            int nb_layers = 1;
-            int nb_neurons_list[1] = {1};
-            Neural_Network and_n_n = CreerResNeur(nb_layers, nb_neurons_list);
+            And_N_N();
             break;
 
         case 3:
             printf("\nGreat, you chose to test the \e[1;48;2;118;201;214mOR\e[0m\e[1m neural network.\e[0m\n\n");
-            int nb_layers = 1;
+            /*int nb_layers = 1;
             int nb_neurons_list[1] = {1};
-            Neural_Network or_n_n = CreerResNeur(nb_layers, nb_neurons_list);
+            Neural_Network or_n_n = Creer_Res_Neur(nb_layers, nb_neurons_list);*/
             break;
 
         case 4:
             printf("\nGreat, you chose to test the \e[1;48;2;118;201;214mNOT\e[0m\e[1m neural network.\e[0m\n\n");
-            int nb_layers = 1;
+            /*int nb_layers = 1;
             int nb_neurons_list[1] = {1};
-            Neural_Network not_n_n = CreerResNeur(nb_layers, nb_neurons_list);
+            Neural_Network not_n_n = Creer_Res_Neur(nb_layers, nb_neurons_list);*/
             break;
 
         case 5:
