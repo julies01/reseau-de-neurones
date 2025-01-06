@@ -17,5 +17,11 @@ void See_Neur(Neuron neuron);
  */
 void See_Linked_List(Weight_List list);
 
+
+
+void See_Entry_List(Entry_List list);
+
+void See_N_N(Neural_Network neural_network);
+
 #endif
 

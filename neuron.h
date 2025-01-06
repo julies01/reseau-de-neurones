@@ -1,6 +1,10 @@
 #ifndef NEURON_H
 #define NEURON_H
 
+typedef struct {
+    int nb_neurons;
+    int nb_entries;
+} Layer_Parameters;
 
 typedef struct Weight_Elem {
 
@@ -47,6 +51,7 @@ typedef struct Neural_Network {
 
 } Neural_Network;
 
+Entry_List E_Add_Elem_Tail(Entry_List list, int value);
 
 
 /**
@@ -56,7 +61,7 @@ typedef struct Neural_Network {
  * @param nb_neurons_list 
  * @return Neural_Network 
  */
-Neural_Network Creer_Res_Neur(int nb_layers, int *nb_neurons_list);
+Neural_Network Creer_Res_Neur(int nb_layers, Layer_Parameters *layers_infos);
 
 
 /**
@@ -76,15 +81,14 @@ Entry_List Forward_Propagation(Neural_Network neural_network, Entry_List ei);
  */
 int Get_Final_Output(Entry_List result_list);
 
-/**
- * @brief 
- * 
- * @param weight_list 
- * @param bias 
- * @param nb_entries 
- * @return Neuron 
- */
-Entry_List Create_Entries_List(int nb_entries);
+Neuron Init_Neur(int *weight_list, int bias, int nb_entries);
 
+Weight_List W_Add_Elem_Tail(Weight_List list, int value);
+
+Neuron_List N_Add_Elem_Tail(Neuron_List list, Neuron neuron);
+
+Layer_List L_Add_Elem_Tail(Layer_List list, Layer layer);
+
+int Out_Neur(Neuron neuron, Entry_List ei);
 
 #endif
