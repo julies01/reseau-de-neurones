@@ -116,7 +116,7 @@ Neuron Init_Neur(int *weight_list, int bias, int nb_entries) {
     }
     
     neuron.bias = bias;
-    free(weight_list);  // Free the input weight_list
+    free(weight_list);  
     return neuron;
 }
 
