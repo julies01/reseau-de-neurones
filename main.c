@@ -4,20 +4,11 @@
 #include "neuron.h"
 #include "debug.h"
 #include "user.h"
-#include "ntwrk.h"
 #include <ctype.h>
 
 int CHOSEN_PROGRAM;
-//ajouter une option pour revenir au menu principal
 
-int Input_Control(int input,int valid_input_list[],int size){
-        for(int i = 0; i < size; i++) {
-            if (input == valid_input_list[i]) {
-                return 1;
-            }
-        }
-        return -1;
-}
+
 
 void And_N_N(){
     CHOSEN_PROGRAM = 2;
@@ -64,30 +55,22 @@ void not_n_n(){
 void multiple_layers_n_n(){
     CHOSEN_PROGRAM = 5;
     int nb_layers = 3;
-    N_Layer_Parameters *n_layers_infos = (N_Layer_Parameters *)malloc(nb_layers*sizeof(N_Layer_Parameters));
-    //n_layers_infos = N_Ask_Layers_Parameters(nb_layers);
-    n_layers_infos[0].nb_neurons = 4;
-    n_layers_infos[0].nb_entries = (int *)malloc(4*sizeof(int));
-    n_layers_infos[0].nb_entries[0] = 1;
-    n_layers_infos[0].nb_entries[1] = 1;
-    n_layers_infos[0].nb_entries[2] = 1;
-    n_layers_infos[0].nb_entries[3] = 1;
+    Layer_Parameters *layers_infos = (Layer_Parameters *)malloc(nb_layers*sizeof(Layer_Parameters));
+    layers_infos[0].nb_neurons = 4;
+    layers_infos[0].nb_entries = 3;
+    
 
-    n_layers_infos[1].nb_neurons = 2;
-    n_layers_infos[1].nb_entries = (int *)malloc(2*sizeof(int));
-    n_layers_infos[1].nb_entries[0] = 3;
-    n_layers_infos[1].nb_entries[1] = 2;
+    layers_infos[1].nb_neurons = 2;
+    layers_infos[1].nb_entries = 4;
 
-    n_layers_infos[2].nb_neurons = 1;
-    n_layers_infos[2].nb_entries = (int *)malloc(2*sizeof(int));
-    n_layers_infos[2].nb_entries[0] = 1;
-    n_layers_infos[2].nb_entries[1] = 1;
-
-    Neural_Network multiple_layers_n_n = N_Creer_Res_Neur(nb_layers, n_layers_infos);
+    layers_infos[2].nb_neurons = 1;
+    layers_infos[2].nb_entries = 2;
+    print("here");  
+    Neural_Network multiple_layers_n_n = Creer_Res_Neur(nb_layers, layers_infos);
     Entry_List entries_list = Ask_Entries_List(3);
 
     See_N_N(multiple_layers_n_n);
-    Entry_List result_list = N_Forward_Propagation(multiple_layers_n_n, entries_list);
+    Entry_List result_list = Forward_Propagation(multiple_layers_n_n, entries_list);
     int final_result = Get_Final_Output(result_list);
     printf("\n\nThe final result is : %d\n\n", final_result);
 }

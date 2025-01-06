@@ -7,7 +7,13 @@
 
 extern int CHOSEN_PROGRAM;
 
-
+/**
+ * @brief A function to add an entry at the end of an entry list
+ * 
+ * @param list the entry list
+ * @param value the value attribute of the new element we want to add
+ * @return Entry_List 
+ */
 Entry_List E_Add_Elem_Tail(Entry_List list, int value){
     Entry_List new_elem = (Entry_List)malloc(sizeof(Entry_List));
     new_elem->value = value;
@@ -29,7 +35,13 @@ Entry_List E_Add_Elem_Tail(Entry_List list, int value){
 }
 
 
-
+/**
+ * @brief A function to add a weight at the end of a weight list
+ * 
+ * @param list the weight list
+ * @param value the value attribute of the new element we want to add
+ * @return Weight_List 
+ */
 Weight_List W_Add_Elem_Tail(Weight_List list, int value){
     Weight_List new_elem = (Weight_List)malloc(sizeof(Weight_Elem));
     if (new_elem == NULL){
@@ -52,6 +64,13 @@ Weight_List W_Add_Elem_Tail(Weight_List list, int value){
     }
 }
 
+/**
+ * @brief A function to add a neurone at the end of a neuron list
+ * 
+ * @param list the neuron list
+ * @param neuron the neuron we want to add
+ * @return Neuron_List 
+ */
 Neuron_List N_Add_Elem_Tail(Neuron_List list, Neuron neuron) {
     Neuron_List new_elem = (Neuron_List)malloc(sizeof(Neuron));
     if (new_elem == NULL) {
@@ -76,6 +95,13 @@ Neuron_List N_Add_Elem_Tail(Neuron_List list, Neuron neuron) {
     }
 }
 
+/**
+ * @brief A function to add a layer at the end of a layer list
+ * 
+ * @param list the layer list
+ * @param layer the layer we want to add
+ * @return Layer_List 
+ */
 Layer_List L_Add_Elem_Tail(Layer_List list, Layer layer) {
     Layer_List new_elem = (Layer_List)malloc(sizeof(Layer));
     if (new_elem == NULL) {
@@ -102,16 +128,16 @@ Layer_List L_Add_Elem_Tail(Layer_List list, Layer layer) {
 /**
  * @brief A function allowing to create a neuron
  * 
- * @param weight_list 
- * @param bias 
- * @param nb_entries 
+ * @param weight_list the list of weights for the neuron
+ * @param bias the bias of the neuron
+ * @param nb_entries the number of entries for the neuron
  * @return Neuron 
  */
 Neuron Init_Neur(int *weight_list, int bias, int nb_entries) {
     Neuron neuron;
     neuron.weight_list = NULL;
     
-    for (int i = 0; i < nb_entries; i++) {
+    for (int i = 0; i < nb_entries; i++) { // Add each weight to the neuron
         neuron.weight_list = W_Add_Elem_Tail(neuron.weight_list, weight_list[i]);
     }
     
@@ -120,6 +146,13 @@ Neuron Init_Neur(int *weight_list, int bias, int nb_entries) {
     return neuron;
 }
 
+/**
+ * @brief A function allowing to get the output of a neuron
+ * 
+ * @param neuron a Neuron
+ * @param ei the list of entries
+ * @return int 
+ */
 int Out_Neur(Neuron neuron, Entry_List ei){
     int x = 0;
     Weight_List temp = neuron.weight_list;
@@ -145,20 +178,128 @@ int Out_Neur(Neuron neuron, Entry_List ei){
     }
 }
 
+/**
+ * @brief A function to get the weights of a neuron for the 5th program
+ * 
+ * @param layer the number of the layer
+ * @return int* 
+ */
+int Weights_For_M_L(int nb_layer, int n_neuron, int n_entries) {
+    switch(nb_layer) {
+        case 1: 
+            switch(n_neuron) {
+                case 1: 
+                    switch(n_entries) {
+                        case 1: 
+                            return 1;
+                        case 2: 
+                            return 0;
+                        case 3: 
+                            return 0;
+                    }
+                case 2: 
+                    switch(n_entries) {
+                        case 1: 
+                            return 0;
+                        case 2: 
+                            return -1;
+                        case 3: 
+                            return 0;
+                    }
+                case 3:
+                    switch(n_entries) {
+                        case 1: 
+                            return 0;
+                        case 2: 
+                            return 0;
+                        case 3: 
+                            return 1;
+                    }
+                case 4: 
+                    switch(n_entries) {
+                        case 1: 
+                            return 0;
+                        case 2: 
+                            return 0;
+                        case 3: 
+                            return -1;
+                    }
+                
+            }  
+        case 2: 
+            switch(n_neuron) {
+                case 1: 
+                    switch(n_entries) {
+                        case 1: 
+                            return 1;
+                        case 2: 
+                            return 1;
+                        case 3: 
+                            return 1;
+                        case 4: 
+                            return 0;
+                    }
+                case 2: 
+                    switch(n_entries) {
+                        case 1: 
+                            return 1;
+                        case 2: 
+                            return 0;
+                        case 3: 
+                            return 0;
+                        case 4:
+                            return 0;
+                    }
+            }            
+        case 3:  
+            return 1;  
+            
+        default:
+            return 0;
+    }
+}
+
+/**
+ * @brief A function to get the bias of a neuron for the 5th program
+ * 
+ * @param layer the number of the layer
+ * @param neuron the number of the neuron
+ * @return int 
+ */
+int Bias_For_M_L(int layer, int neuron) {
+    switch(layer) {
+        case 1:  
+            return 0.5;
+            break;
+
+        case 2 : 
+            if (neuron == 1) {  
+                return 3;
+            } else {                
+                return 2;
+            }
+            
+        case 3:  
+            return 1;   
+    }
+    return 0;
+}
+
 
 /**
  * @brief Une fonction permettant de créer une couche de neurones
  * 
  * @param nb_neurons le nombre de neurones dans la couche
  * @param nb_entries le nombre d'entrées pour le ou les neurones
+ * @param nb_layer le numéro de la couche
  * @return Layer 
  */
-Layer InitCouche(int nb_neurons, int nb_entries,int j){
+Layer Init_Couche(int nb_neurons, int nb_entries,int nb_layer){
     Layer layer;
     layer.neurons = NULL;
     int *weight_list;  
     int bias;
-    printf("\n\e[3mCreating the layer n°%d...\e[0m\n",j);
+    printf("\n\e[3mCreating the layer n°%d...\e[0m\n",nb_layer);
     for (int i = 0; i < nb_neurons; i++){
         if (CHOSEN_PROGRAM == 1){
             bias = Ask_Bias(i+1);
@@ -172,7 +313,10 @@ Layer InitCouche(int nb_neurons, int nb_entries,int j){
         if (CHOSEN_PROGRAM == 4){
             bias = 0;
         }
-        weight_list = Ask_Weight_List(nb_entries, i+1);
+        if (CHOSEN_PROGRAM == 5){
+            bias = bias = Bias_For_M_L(nb_layer, i+1);
+        }
+        weight_list = Ask_Weight_List(nb_entries, i+1, nb_layer);
         Neuron neuron = Init_Neur(weight_list, bias, nb_entries);
         layer.neurons = N_Add_Elem_Tail(layer.neurons, neuron);
     }
@@ -186,7 +330,7 @@ Layer InitCouche(int nb_neurons, int nb_entries,int j){
  * @param ei 
  * @return Linked_List 
  */
-Entry_List OutCouche(Layer layer, Entry_List ei){
+Entry_List Out_Couche(Layer layer, Entry_List ei){
     Entry_List result = NULL;
     Neuron_List neuron_list = layer.neurons;
     if (neuron_list == NULL) {
@@ -210,7 +354,7 @@ Neural_Network Creer_Res_Neur(int nb_layers, Layer_Parameters *layers_infos) {
     Layer_List current = NULL;
 
     for (int i = 0; i < nb_layers; i++) {
-        Layer layer = InitCouche(layers_infos[i].nb_neurons, layers_infos[i].nb_entries, i+1);
+        Layer layer = Init_Couche(layers_infos[i].nb_neurons, layers_infos[i].nb_entries, i+1);
         if (neural_network.Input_layer == NULL) {
             // First layer becomes input layer
             neural_network.Input_layer = L_Add_Elem_Tail(NULL, layer);
@@ -261,4 +405,18 @@ int Get_Final_Output(Entry_List result_list){
     else {
         return result_list->value;
     }
+}
+
+void Free_Weight_List(double **weight_list, int nb_weights) {
+    if (weight_list == NULL) {
+        return;
+    }
+    
+    // Libérer chaque tableau de poids
+    for (int i = 0; i < nb_weights; i++) {
+        free(weight_list[i]);
+    }
+    
+    // Libérer le tableau principal
+    free(weight_list);
 }
