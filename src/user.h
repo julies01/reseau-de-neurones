@@ -13,6 +13,13 @@
 int Input_Control(int input,int valid_input_list[],int size);
 
 /**
+ * @brief A function to ask the user what he wants to do
+ * 
+ */
+void Menu();
+
+
+/**
  * @brief A function to ask the user the number of layers that the neural network will have
  * 
  * @return int the number of layers
@@ -73,5 +80,12 @@ void Free_Layers_Parameters(Layer_Parameters *layers);
  */
 void Free_Entries_List(Entry_List list);
 
+/**
+ * @brief A function to ask the user what he wants to do after the neural network has been created
+ * 
+ * @param neural_network    a neural network
+ * @param layers_infos  the parameters of the layers
+ */
+void Return(Neural_Network neural_network, Layer_Parameters *layers_infos);
 
 #endif

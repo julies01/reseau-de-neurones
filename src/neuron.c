@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "debug.h"
 #include "neuron.h"
 #include "user.h"
 
@@ -248,7 +249,7 @@ int Weights_For_M_L(int nb_layer, int n_neuron, int n_entries) {
                         case 3: 
                             return 0;
                         case 4:
-                            return 0;
+                            return 1;
                     }
             }            
         case 3:  
@@ -268,8 +269,22 @@ int Weights_For_M_L(int nb_layer, int n_neuron, int n_entries) {
  */
 int Bias_For_M_L(int layer, int neuron) {
     switch(layer) {
-        case 1:  
-            return 0.5;
+        case 1: 
+            switch (neuron){
+                case 1:
+                    return 1;
+                    break;
+                case 2:
+                    return 0;
+                    break;
+                case 3:
+                    return 1;
+                    break;
+                case 4:
+                    return 0;
+                    break;
+            }
+            return 0;
             break;
 
         case 2 : 
@@ -314,7 +329,7 @@ Layer Init_Couche(int nb_neurons, int nb_entries,int nb_layer){
             bias = 0;
         }
         if (CHOSEN_PROGRAM == 5){
-            bias = bias = Bias_For_M_L(nb_layer, i+1);
+            bias = Bias_For_M_L(nb_layer, i+1);
         }
         weight_list = Ask_Weight_List(nb_entries, i+1, nb_layer);
         Neuron neuron = Init_Neur(weight_list, bias, nb_entries);
@@ -387,6 +402,7 @@ Entry_List Forward_Propagation(Neural_Network neural_network, Entry_List ei){
     Entry_List result = ei;
     Layer_List temp_layer = neural_network.Input_layer;
     while (temp_layer != NULL){
+        See_Entry_List(result);
         result = Out_Couche(*temp_layer, result);
         temp_layer = temp_layer->next;
     }
@@ -414,7 +430,7 @@ int Get_Final_Output(Entry_List result_list){
 }
 
 /**
- * @brief A function to free the memory allocated for the weight list
+ * @brief A procedure to free the memory allocated for the weight list
  * 
  * @param weight_list a list of weights
  */
@@ -424,6 +440,40 @@ void Free_Weight_List(Weight_List weight_list) {
 
     while (current != NULL) {
         next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+/**
+ * @brief A procedure to free the memory allocated for a layer
+ * 
+ * @param layer a layer
+ */
+void  Free_Layer(Layer layer) {
+    Neuron_List current = layer.neurons;
+    Neuron_List next;
+
+    while (current != NULL) {
+        next = current->next;
+        Free_Weight_List(current->weight_list);
+        free(current);
+        current = next;
+    }
+}
+
+/**
+ * @brief A procredure to free the memory allocated for the neural network
+ * 
+ * @param neural_network a neural network
+ */
+void Free_Neural_Network(Neural_Network neural_network) {
+    Layer_List current = neural_network.Input_layer;
+    Layer_List next;
+
+    while (current != NULL) {
+        next = current->next;
+        Free_Layer(*current);
         free(current);
         current = next;
     }

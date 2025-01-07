@@ -182,6 +182,18 @@ int Get_Final_Output(Entry_List result_list);
  */
 void Free_Weight_List(Weight_List weight_list);
 
+/**
+ * @brief A procedure to free the memory allocated for a layer
+ * 
+ * @param layer a layer
+ */
+void  Free_Layer(Layer layer);
 
+/**
+ * @brief A procredure to free the memory allocated for the neural network
+ * 
+ * @param neural_network a neural network
+ */
+void Free_Neural_Network(Neural_Network neural_network);
 
 #endif

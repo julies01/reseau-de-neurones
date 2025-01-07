@@ -27,10 +27,12 @@ void See_Neur(Neuron *neuron, int i){
  * @param list the list of entries
  */
 void See_Entry_List(Entry_List list){
+    printf("\nEntry list : [");
     while (list != NULL){
-        printf("%d ",list->value);
+        printf("%d, ",list->value);
         list = list->next;
     }
+    printf("]\n");
     printf("\n");
 }
 

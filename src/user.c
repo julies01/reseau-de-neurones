@@ -2,10 +2,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "main.h"
 #include "neuron.h"
 #include "debug.h"
 
 extern int CHOSEN_PROGRAM;
+
+/**
+ * @brief A function to control the input of the user to make sure it is valid
+ * 
+ * @param input the input of the user, a number
+ * @param valid_input_list the list of valid inputs
+ * @param size the size of the list of valid inputs
+ * @return int 
+ */
+int Input_Control(int input,int valid_input_list[],int size){
+        for(int i = 0; i < size; i++) {
+            if (input == valid_input_list[i]) {
+                return 1;
+            }
+        }
+        return -1;
+}
 
 /**
  * @brief A function to ask the user what he wants to do
@@ -34,20 +52,35 @@ void Menu(){
  }
 
 /**
- * @brief A function to control the input of the user to make sure it is valid
+ * @brief A function to ask the user what he wants to do after the neural network has been created
  * 
- * @param input the input of the user, a number
- * @param valid_input_list the list of valid inputs
- * @param size the size of the list of valid inputs
- * @return int 
+ * @param neural_network    a neural network
+ * @param layers_infos  the parameters of the layers
  */
-int Input_Control(int input,int valid_input_list[],int size){
-        for(int i = 0; i < size; i++) {
-            if (input == valid_input_list[i]) {
-                return 1;
-            }
-        }
-        return -1;
+void Return(Neural_Network neural_network, Layer_Parameters *layers_infos){ 
+    printf("\nWould you like to:\n\n");
+    printf("    M - Return to Menu\n");
+    printf("    T - Try with other entries\n");
+    printf("    Q - Quit\n");
+    printf("\n-> Please enter your choice : ");
+    
+    char input[10];
+    scanf("%9s", input);
+    while (strlen(input) != 1 || (toupper(input[0]) != 'M' && toupper(input[0]) != 'T' && toupper(input[0]) != 'Q')) {
+        printf("-> Please enter a valid choice (M, T, or Q): ");
+        scanf("%9s", input);
+    }
+
+    switch(toupper(input[0])) {
+        case 'M':
+            Menu();
+            break;
+        case 'T':
+            Try_Again(neural_network, layers_infos);
+            return;
+        case 'Q':
+           Redirection(0);
+    }
 }
 
 /**
@@ -135,7 +168,6 @@ int Ask_Bias(int nb_neuron){
  * @return int* 
  */
 int *Ask_Weight_List(int nb_entries,int nb_neuron,int nb_layer){
-    printf("chosen program : %d\n", CHOSEN_PROGRAM);
     int *weight_list = (int *)malloc(nb_entries*sizeof(int));
     printf("\n\e[3mCreating the weight list ...\e[0m\n");
 
@@ -202,11 +234,11 @@ Entry_List Ask_Entries_List(int nb_entries){
     Entry_List entries_list = NULL;
     for (int i = 0; i < nb_entries; i++){
         int value;
-        printf("-> Please enter \e[1mthe value\e[0m of the entry number %d : ", i+1);
+        printf("\n-> Please enter \e[1mthe value\e[0m of the entry number %d : ", i+1);
         char input[10];
         scanf("%9s", input);
         while (strlen(input) != 1 || !isdigit(input[0])) {
-            printf("-> Please enter \e[31ma valid number\e[0m for the entry value : ");
+            printf("\n-> Please enter \e[31ma valid number\e[0m for the entry value :");
             scanf("%9s", input);
         }
         value = input[0] - '0';
