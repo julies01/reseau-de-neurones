@@ -10,21 +10,6 @@
 int CHOSEN_PROGRAM;
 
 /**
- * @brief A function to free the memory allocated during the usage of the program
- * 
- * @param neural_network a neural network
- * @param entries_list an entry list
- * @param result_list a result list
- * @param layers_infos a layers parameters list
- */
-void Free(Neural_Network neural_network, Entry_List entries_list, Entry_List result_list, Layer_Parameters *layers_infos){
-    Free_Neural_Network(neural_network);
-    Free_Entries_List(entries_list);
-    Free_Entries_List(result_list);
-    Free_Layers_Parameters(layers_infos);
-}
-
-/**
  * @brief A function to use the neural network again but asking for different entries
  * 
  * @param neural_network a neural network
@@ -36,7 +21,8 @@ void Try_Again(Neural_Network neural_network, Layer_Parameters *layers_infos){
     See_N_N(neural_network);
     int final_result = Get_Final_Output(result_list);
     printf("\n\nThe final result is : %d\n\n", final_result);
-    Free(neural_network, entries_list, result_list, layers_infos);
+    Free_Entries_List(entries_list);
+    Free_Entries_List(result_list);
     Return(neural_network, layers_infos);
 }
 /**
@@ -55,8 +41,9 @@ void And_N_N(){
     See_N_N(and_n_n);
     int final_result = Get_Final_Output(result_list);
     printf("\n\nThe final result is : %d\n\n", final_result);
+    Free_Entries_List(entries_list);
+    Free_Entries_List(result_list);
     Return(and_n_n, layers_infos);
-    Free(and_n_n, entries_list, result_list, layers_infos);
 }
 
 /**
@@ -75,8 +62,9 @@ void Or_N_N(){
     See_N_N(or_n_n);
     int final_result = Get_Final_Output(result_list);
     printf("\n\nThe final result is : %d\n\n", final_result);
+    Free_Entries_List(entries_list);
+    Free_Entries_List(result_list);
     Return(or_n_n, layers_infos);
-    Free(or_n_n, entries_list, result_list, layers_infos);
 }
  
  /**
@@ -95,8 +83,9 @@ void Not_N_N(){
     See_N_N(not_n_n);
     int final_result = Get_Final_Output(result_list);
     printf("\n\nThe final result is : %d\n\n", final_result);
+    Free_Entries_List(entries_list);
+    Free_Entries_List(result_list);
     Return(not_n_n, layers_infos);
-    Free(not_n_n, entries_list, result_list, layers_infos);
 }
 
 /**
@@ -123,8 +112,9 @@ void Multiple_Layers_N_N(){
     Entry_List result_list = Forward_Propagation(multiple_layers_n_n, entries_list);
     int final_result = Get_Final_Output(result_list);
     printf("\n\nThe final result is : %d\n\n", final_result);
+    Free_Entries_List(entries_list);
+    Free_Entries_List(result_list);
     Return(multiple_layers_n_n, layers_infos);
-    Free(multiple_layers_n_n, entries_list, result_list, layers_infos);
 }
     
 /**
@@ -143,8 +133,9 @@ void Create_N_N(){
     Entry_List result_list = Forward_Propagation(neural_network, entries_list);
     int final_result = Get_Final_Output(result_list);
     printf("\n\nThe final result is : %d\n\n", final_result);
+    Free_Entries_List(entries_list);
+    Free_Entries_List(result_list);
     Return(neural_network, layers_infos);
-    Free(neural_network, entries_list, result_list, layers_infos);
 }
 
 

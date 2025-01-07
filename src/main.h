@@ -3,15 +3,6 @@
 
 #include "neuron.h"
 
-/**
- * @brief A function to free the memory allocated during the usage of the program
- * 
- * @param neural_network a neural network
- * @param entries_list an entry list
- * @param result_list a result list
- * @param layers_infos a layers parameters list
- */
-void Free(Neural_Network neural_network, Entry_List entries_list, Entry_List result_list, Layer_Parameters *layers_infos);
 
 /**
  * @brief A function to use the neural network again but asking for different entries

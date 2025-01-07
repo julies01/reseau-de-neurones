@@ -51,6 +51,15 @@ void Menu(){
     Redirection(input[0] - '0');
  }
 
+ /**
+ * @brief A procedure to free the memory allocated for the layers parameters
+ * 
+ * @param layers the list of layers parameters
+ */
+void Free_Layers_Parameters(Layer_Parameters *layers) {
+    free(layers);
+}
+
 /**
  * @brief A function to ask the user what he wants to do after the neural network has been created
  * 
@@ -73,13 +82,17 @@ void Return(Neural_Network neural_network, Layer_Parameters *layers_infos){
 
     switch(toupper(input[0])) {
         case 'M':
+            Free_Layers_Parameters(layers_infos);
+            Free_Neural_Network(neural_network);
             Menu();
             break;
         case 'T':
             Try_Again(neural_network, layers_infos);
             return;
         case 'Q':
-           Redirection(0);
+            Free_Layers_Parameters(layers_infos);
+            Free_Neural_Network(neural_network);
+            Redirection(0);
     }
 }
 
@@ -247,14 +260,7 @@ Entry_List Ask_Entries_List(int nb_entries){
     return entries_list;
 }
 
-/**
- * @brief A procedure to free the memory allocated for the layers parameters
- * 
- * @param layers the list of layers parameters
- */
-void Free_Layers_Parameters(Layer_Parameters *layers) {
-    free(layers);
-}
+
 
 /**
  * @brief A procedure to free the memory allocated for the weight list
