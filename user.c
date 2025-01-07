@@ -8,6 +8,32 @@
 extern int CHOSEN_PROGRAM;
 
 /**
+ * @brief A function to ask the user what he wants to do
+ * 
+ */
+void Menu(){
+    printf("Here's all \e[1mthe options\e[0m you can choose from:\n\n");
+    printf("\e[3mCreate your own neural network ...\n\n\e[0m");
+    printf("    \e[47m1.\e[0m Create a new neural network\n\n");
+    printf("\e[3mOr test a pre-made one ...\n\n\e[0m");
+    printf("    \e[46m2.\e[0m AND neural network\n");
+    printf("    \e[45m3.\e[0m OR neural network\n");
+    printf("    \e[44m4.\e[0m NOT neural network\n");
+    printf("    \e[42m5.\e[0m (A AND (NOT B) AND C) OR (A AND (NOT C)) neural network\n\n\n");
+    printf("\e[41m0.\e[0m \e[1mExit\e[0m\n\n");
+    printf("-> Please \e[1menter\e[0m the number corresponding to the option you want to choose : ");
+    
+    char input[10];
+    int valid_input_list[7] = {0,1,2,3,4,5,6};
+    scanf("%9s", input);
+    while (strlen(input) != 1 || !isdigit(input[0]) || Input_Control(input[0] - '0', valid_input_list, 7) == -1) {
+        printf("-> Please enter \e[31ma valid number\e[0m for the option : ");
+        scanf("%9s", input);
+    }
+    Redirection(input[0] - '0');
+ }
+
+/**
  * @brief A function to control the input of the user to make sure it is valid
  * 
  * @param input the input of the user, a number
@@ -109,6 +135,7 @@ int Ask_Bias(int nb_neuron){
  * @return int* 
  */
 int *Ask_Weight_List(int nb_entries,int nb_neuron,int nb_layer){
+    printf("chosen program : %d\n", CHOSEN_PROGRAM);
     int *weight_list = (int *)malloc(nb_entries*sizeof(int));
     printf("\n\e[3mCreating the weight list ...\e[0m\n");
 

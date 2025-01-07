@@ -5,7 +5,7 @@
 /**
  * @brief A procedure allowing to see the content of a neuron
  * 
- * @param neuron 
+ * @param neuron A neuron
  */
 void See_Neur(Neuron *neuron, int i){
 
@@ -21,7 +21,11 @@ void See_Neur(Neuron *neuron, int i){
     printf("\n");
 }
 
-
+/**
+ * @brief A procedure allowing to see the content of a weight list
+ * 
+ * @param list the list of entries
+ */
 void See_Entry_List(Entry_List list){
     while (list != NULL){
         printf("%d ",list->value);
@@ -30,6 +34,12 @@ void See_Entry_List(Entry_List list){
     printf("\n");
 }
 
+/**
+ * @brief A procedure allowing to see the content of a layer
+ * 
+ * @param layer A layer
+ * @param i The number of the layer
+ */
 void See_Layer(Layer *layer, int i){
     printf("\nLayer n°%d : \n",i);
     Neuron_List temp_neuron = layer->neurons;
@@ -41,6 +51,11 @@ void See_Layer(Layer *layer, int i){
     }
 }
 
+/**
+ * @brief A procedure allowing to see the content of a neural network
+ * 
+ * @param neural_network A neural network
+ */
 void See_N_N(Neural_Network neural_network){
     Layer_List temp_layer = neural_network.Input_layer;
     int k = 1;

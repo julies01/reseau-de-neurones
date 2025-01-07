@@ -324,10 +324,10 @@ Layer Init_Couche(int nb_neurons, int nb_entries,int nb_layer){
 }
 
 /**
- * @brief 
+ * @brief A function to get the entries list that is the output of a layer
  * 
- * @param layer 
- * @param ei 
+ * @param layer A layer of the neural network
+ * @param ei An entry list
  * @return Linked_List 
  */
 Entry_List Out_Couche(Layer layer, Entry_List ei){
@@ -346,7 +346,13 @@ Entry_List Out_Couche(Layer layer, Entry_List ei){
     
 }
 
-
+/**
+ * @brief A function to create a neural network
+ * 
+ * @param nb_layers the number of layers of the neural network
+ * @param layers_infos the list of the parameters of the layers
+ * @return Neural_Network 
+ */
 Neural_Network Creer_Res_Neur(int nb_layers, Layer_Parameters *layers_infos) {
     Neural_Network neural_network;
     neural_network.Input_layer = NULL;
@@ -381,7 +387,7 @@ Entry_List Forward_Propagation(Neural_Network neural_network, Entry_List ei){
     Entry_List result = ei;
     Layer_List temp_layer = neural_network.Input_layer;
     while (temp_layer != NULL){
-        result = OutCouche(*temp_layer, result);
+        result = Out_Couche(*temp_layer, result);
         temp_layer = temp_layer->next;
     }
     return result;
@@ -407,16 +413,18 @@ int Get_Final_Output(Entry_List result_list){
     }
 }
 
-void Free_Weight_List(double **weight_list, int nb_weights) {
-    if (weight_list == NULL) {
-        return;
+/**
+ * @brief A function to free the memory allocated for the weight list
+ * 
+ * @param weight_list a list of weights
+ */
+void Free_Weight_List(Weight_List weight_list) {
+    Weight_List current = weight_list;
+    Weight_List next;
+
+    while (current != NULL) {
+        next = current->next;
+        free(current);
+        current = next;
     }
-    
-    // Libérer chaque tableau de poids
-    for (int i = 0; i < nb_weights; i++) {
-        free(weight_list[i]);
-    }
-    
-    // Libérer le tableau principal
-    free(weight_list);
 }

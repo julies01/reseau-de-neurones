@@ -135,37 +135,52 @@ int Bias_For_M_L(int layer, int neuron);
  * 
  * @param nb_neurons le nombre de neurones dans la couche
  * @param nb_entries le nombre d'entrées pour le ou les neurones
- * @param j le numéro de la couche
+ * @param nb_couche le numéro de la couche
  * @return Layer 
  */
 Layer Init_Couche(int nb_neurons, int nb_entries,int nb_couche);
 
 /**
- * @brief 
+ * @brief A function to get the entries list that is the output of a layer
  * 
- * @param nb_layers 
- * @param nb_neurons_list 
+ * @param layer A layer of the neural network
+ * @param ei An entry list
+ * @return Linked_List 
+ */
+Entry_List Out_Couche(Layer layer, Entry_List ei);
+
+/**
+ * @brief A function to create a neural network
+ * 
+ * @param nb_layers the number of layers of the neural network
+ * @param layers_infos the list of the parameters of the layers
  * @return Neural_Network 
  */
 Neural_Network Creer_Res_Neur(int nb_layers, Layer_Parameters *layers_infos);
 
-
 /**
- * @brief 
+ * @brief A procedure that implements the forward propagation on a neural network
  * 
- * @param neural_network 
- * @param ei 
- * @return Linked_List 
+ * @param neural_network a neural network
+ * @param ei a list of entries
  */
+
 Entry_List Forward_Propagation(Neural_Network neural_network, Entry_List ei);
 
 /**
- * @brief 
+ * @brief A function that allow to see the final output of the neural network
  * 
- * @param result_list 
+ * @param result the list of the result of the output layer
  * @return int 
  */
 int Get_Final_Output(Entry_List result_list);
+
+/**
+ * @brief A function to free the memory allocated for the weight list
+ * 
+ * @param weight_list a list of weights
+ */
+void Free_Weight_List(Weight_List weight_list);
 
 
 

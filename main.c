@@ -8,8 +8,6 @@
 
 int CHOSEN_PROGRAM;
 
-
-
 void And_N_N(){
     CHOSEN_PROGRAM = 2;
     int nb_layers = 1;
@@ -124,27 +122,6 @@ void Redirection(int input){
     }
 }
 
-void Menu(){
-    printf("Here's all \e[1mthe options\e[0m you can choose from:\n\n");
-    printf("\e[3mCreate your own neural network ...\n\n\e[0m");
-    printf("    \e[47m1.\e[0m Create a new neural network\n\n");
-    printf("\e[3mOr test a pre-made one ...\n\n\e[0m");
-    printf("    \e[46m2.\e[0m AND neural network\n");
-    printf("    \e[45m3.\e[0m OR neural network\n");
-    printf("    \e[44m4.\e[0m NOT neural network\n");
-    printf("    \e[42m5.\e[0m (A AND (NOT B) AND C) OR (A AND (NOT C)) neural network\n\n\n");
-    printf("\e[41m0.\e[0m \e[1mExit\e[0m\n\n");
-    printf("-> Please \e[1menter\e[0m the number corresponding to the option you want to choose : ");
-    
-    char input[10];
-    int valid_input_list[7] = {0,1,2,3,4,5,6};
-    scanf("%9s", input);
-    while (strlen(input) != 1 || !isdigit(input[0]) || Input_Control(input[0] - '0', valid_input_list, 7) == -1) {
-        printf("-> Please enter \e[31ma valid number\e[0m for the option : ");
-        scanf("%9s", input);
-    }
-    Redirection(input[0] - '0');
- }
 
 int main() {
     printf("\n\n \e[1m Hello, and welcome to my neural network maker program ! \e[0m\n\n");
